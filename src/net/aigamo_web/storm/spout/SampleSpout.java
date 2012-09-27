@@ -12,19 +12,16 @@ public class SampleSpout extends BaseRichSpout {
 	@Override
 	public void open(Map conf, TopologyContext context,
 			SpoutOutputCollector collector) {
-		// TODO 自動生成されたメソッド・スタブ
 
 	}
 
 	@Override
 	public void nextTuple() {
-		// TODO 自動生成されたメソッド・スタブ
 
 	}
 
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
-		// TODO 自動生成されたメソッド・スタブ
 
 	}
 
