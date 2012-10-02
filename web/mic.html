@@ -1,0 +1,15 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>x-webkit-speech test</title>
+<script>
+function onSpeechChange() {
+alert("changed");
+}
+</script>
+</head>
+<body>
+<input type="text" rows="30" width="300" x-webkit-speech onwebkitspeechchange="onSpeechChange();" />
+
+</body>
+</html>
