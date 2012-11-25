@@ -11,10 +11,10 @@
   :dependencies [
                  [org.twitter4j/twitter4j-core "2.2.6-SNAPSHOT"]
                  [org.twitter4j/twitter4j-stream "2.2.6-SNAPSHOT"]
-                 [org.clojure/clojure-contrib "1.1.0"]
+                 [org.clojure/clojure-contrib "1.2.0"]
                  ]
 
-  :dev-dependencies [[storm "0.8.0"]
+  :dev-dependencies [[storm "0.8.1"]
                      [org.clojure/clojure "1.4.0"]
                      ])
 
