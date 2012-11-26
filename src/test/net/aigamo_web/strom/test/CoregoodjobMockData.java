@@ -51,8 +51,9 @@ public class CoregoodjobMockData {
 			e.printStackTrace();
 		}
 
-		Values[] result = (Values[]) mockData.toArray(new Values[mockData.size()]);
-		
+		Values[] result = (Values[]) mockData.toArray(new Values[mockData
+				.size()]);
+
 		return result;
 	}
 
