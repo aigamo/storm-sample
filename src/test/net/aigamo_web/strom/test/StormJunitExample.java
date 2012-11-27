@@ -237,25 +237,22 @@ public class StormJunitExample extends TestCase {
 
 	/**
 	 * show how to use testTuple
-	 *//*
-	public void testTestTuple() {
-		// only specify values
-		Tuple tuple = Testing.testTuple(new Values("james", "bond"));
-		Testing.multiseteq(new Values("james", "bond"), tuple.getValues());
-
-		// specify stream, component and fields
-		MkTupleParam param = new MkTupleParam();
-		param.setStream("test-stream");
-		param.setComponent("test-component");
-		param.setFields("fname", "lname");
-		tuple = Testing.testTuple(new Values("james", "bond"), param);
-		Testing.multiseteq(new Values("james", "bond"), tuple.getValues());
-		assertEquals("test-stream", tuple.getSourceStreamId());
-		assertEquals("test-component", tuple.getSourceComponent());
-		Testing.multiseteq(new Values("fname", "lname"), tuple.getFields()
-				.toList());
-	}
-*/
+	 */
+	/*
+	 * public void testTestTuple() { // only specify values Tuple tuple =
+	 * Testing.testTuple(new Values("james", "bond")); Testing.multiseteq(new
+	 * Values("james", "bond"), tuple.getValues());
+	 * 
+	 * // specify stream, component and fields MkTupleParam param = new
+	 * MkTupleParam(); param.setStream("test-stream");
+	 * param.setComponent("test-component"); param.setFields("fname", "lname");
+	 * tuple = Testing.testTuple(new Values("james", "bond"), param);
+	 * Testing.multiseteq(new Values("james", "bond"), tuple.getValues());
+	 * assertEquals("test-stream", tuple.getSourceStreamId());
+	 * assertEquals("test-component", tuple.getSourceComponent());
+	 * Testing.multiseteq(new Values("fname", "lname"), tuple.getFields()
+	 * .toList()); }
+	 */
 	public static void assertAcked(AckFailMapTracker tracker, Object... ids) {
 		boolean notAllAcked = true;
 

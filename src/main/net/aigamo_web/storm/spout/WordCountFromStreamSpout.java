@@ -18,15 +18,26 @@ import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 
-public class TimeLineSpout extends BaseRichSpout {
+public class WordCountFromStreamSpout extends BaseRichSpout {
 
 	private static final long serialVersionUID = 1L;
 
-	public static Logger log = Logger.getLogger(TimeLineSpout.class);
+	public static Logger log = Logger.getLogger(WordCountFromStreamSpout.class);
 	boolean isDistributed;
 	SpoutOutputCollector collector;
+	BufferedReader reader;
 
-	public TimeLineSpout() {
+	public static final String baseUri = "http://localhost:9000/coregoodjob/strom/api/1.0";
+
+	public WordCountFromStreamSpout() {
+		try {
+
+			URL url = new URL(baseUri + "/test.json");
+			reader = new BufferedReader(new InputStreamReader(url.openStream(),
+					"UTF-8"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -37,12 +48,8 @@ public class TimeLineSpout extends BaseRichSpout {
 
 	@Override
 	public void nextTuple() {
-
 		try {
-			URL url = new URL(
-					"http://localhost:9000/coregoodjob/strom/api/1.0/test");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					url.openStream(), "UTF-8"));
+
 			String contents = IOUtils.toString(reader);
 
 			// JsonFactoryの生成
@@ -50,7 +57,6 @@ public class TimeLineSpout extends BaseRichSpout {
 			// JsonParserの取得
 			JsonParser parser = factory.createJsonParser(contents);
 			// 各オブジェクトの処理
-			log.debug("start Timeline Soput");
 			if (parser.getCurrentToken() == JsonToken.START_OBJECT) {
 				while (parser.nextToken() != JsonToken.END_OBJECT) {
 					String name = parser.getCurrentName();

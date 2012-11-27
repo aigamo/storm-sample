@@ -2,25 +2,21 @@ package net.aigamo_web.strom.test;
 
 import java.util.Map;
 
-import net.aigamo_web.storm.bolt.PrinterBolt;
-import net.aigamo_web.storm.spout.TimeLineSpout;
-
 import junit.framework.TestCase;
+import net.aigamo_web.storm.bolt.PrinterBolt;
+import net.aigamo_web.storm.spout.WordCountFromStreamSpout;
 import backtype.storm.Config;
 import backtype.storm.ILocalCluster;
 import backtype.storm.Testing;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.testing.CompleteTopologyParam;
 import backtype.storm.testing.MkClusterParam;
-import backtype.storm.testing.MockedSources;
 import backtype.storm.testing.TestAggregatesCounter;
 import backtype.storm.testing.TestGlobalCount;
 import backtype.storm.testing.TestJob;
 import backtype.storm.testing.TestWordCounter;
-import backtype.storm.testing.TestWordSpout;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.tuple.Fields;
-import backtype.storm.tuple.Values;
 import backtype.storm.utils.Time;
 
 public class CoregoodJobTest extends TestCase {
@@ -47,6 +43,8 @@ public class CoregoodJobTest extends TestCase {
 		mkClusterParam.setSupervisors(1);
 		Config daemonConf = new Config();
 		daemonConf.put(Config.STORM_LOCAL_MODE_ZMQ, false);
+		daemonConf.put(Config.STORM_LOCAL_DIR, "C:\\storm");
+		daemonConf.put(Config.TOPOLOGY_FALL_BACK_ON_JAVA_SERIALIZATION, false);
 		daemonConf.setDebug(true);
 		mkClusterParam.setDaemonConf(daemonConf);
 
@@ -60,7 +58,7 @@ public class CoregoodJobTest extends TestCase {
 				// build the test topology
 				TopologyBuilder builder = new TopologyBuilder();
 
-				builder.setSpout("1", new TimeLineSpout(), 3);
+				builder.setSpout("1", new WordCountFromStreamSpout(), 3);
 				builder.setBolt("2", new TestWordCounter(), 4).fieldsGrouping(
 						"1", new Fields("word"));
 				builder.setBolt("3", new TestGlobalCount()).globalGrouping("1");
@@ -72,19 +70,19 @@ public class CoregoodJobTest extends TestCase {
 				// complete the topology
 
 				// prepare the mock data
-				MockedSources mockedSources = new MockedSources();
+				// MockedSources mockedSources = new MockedSources();
 				// mockedSources.addMockData("1", new Values("nathan"),
 				// new Values("bob"), new Values("joey"), new Values(
 				// "nathan"));
-				mockedSources.addMockData("1",
-						CoregoodjobMockData.getMockData());
+				// mockedSources.addMockData("1",
+				// CoregoodjobMockData.getMockData());
 
 				// prepare the config
 				Config conf = new Config();
 				conf.setNumWorkers(2);
 
 				CompleteTopologyParam completeTopologyParam = new CompleteTopologyParam();
-				completeTopologyParam.setMockedSources(mockedSources);
+				// completeTopologyParam.setMockedSources(mockedSources);
 				completeTopologyParam.setStormConf(conf);
 				/**
 				 * TODO
@@ -94,7 +92,7 @@ public class CoregoodJobTest extends TestCase {
 				Map result = Testing.completeTopology(cluster, topology,
 						completeTopologyParam);
 
-				System.out.println(Testing.readTuples(result, "1"));
+				System.out.println(Testing.readTuples(result, "2"));
 				/**
 				 * // check whether the result is right
 				 * assertTrue(Testing.multiseteq(new Values(new
@@ -106,5 +104,4 @@ public class CoregoodJobTest extends TestCase {
 		});
 
 	}
-
 }
