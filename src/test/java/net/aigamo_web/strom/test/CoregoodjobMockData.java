@@ -1,11 +1,8 @@
 package net.aigamo_web.strom.test;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
-import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonToken;
@@ -20,15 +17,12 @@ public class CoregoodjobMockData {
 
 		try {
 			URL url = new URL(
-					"http://localhost:9000/coregoodjob/strom/api/1.0/test");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					url.openStream(), "UTF-8"));
-			String contents = IOUtils.toString(reader);
+					"http://localhost:9000/coregoodjob/storm/api/v1.0/test.json");
 
 			// JsonFactoryの生成
 			JsonFactory factory = new JsonFactory();
 			// JsonParserの取得
-			JsonParser parser = factory.createJsonParser(contents);
+			JsonParser parser = factory.createJsonParser(url);
 			// 各オブジェクトの処理
 			if (parser.getCurrentToken() == JsonToken.START_OBJECT) {
 				while (parser.nextToken() != JsonToken.END_OBJECT) {

@@ -11,6 +11,7 @@ import backtype.storm.Testing;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.testing.CompleteTopologyParam;
 import backtype.storm.testing.MkClusterParam;
+import backtype.storm.testing.MockedSources;
 import backtype.storm.testing.TestAggregatesCounter;
 import backtype.storm.testing.TestGlobalCount;
 import backtype.storm.testing.TestJob;
@@ -43,8 +44,8 @@ public class CoregoodJobTest extends TestCase {
 		mkClusterParam.setSupervisors(1);
 		Config daemonConf = new Config();
 		daemonConf.put(Config.STORM_LOCAL_MODE_ZMQ, false);
-		daemonConf.put(Config.STORM_LOCAL_DIR, "C:\\storm");
-		daemonConf.put(Config.TOPOLOGY_FALL_BACK_ON_JAVA_SERIALIZATION, false);
+		//daemonConf.put(Config.STORM_LOCAL_DIR, "C:\\storm");
+		//daemonConf.put(Config.TOPOLOGY_FALL_BACK_ON_JAVA_SERIALIZATION, false);
 		daemonConf.setDebug(true);
 		mkClusterParam.setDaemonConf(daemonConf);
 
@@ -70,19 +71,19 @@ public class CoregoodJobTest extends TestCase {
 				// complete the topology
 
 				// prepare the mock data
-				// MockedSources mockedSources = new MockedSources();
+				MockedSources mockedSources = new MockedSources();
 				// mockedSources.addMockData("1", new Values("nathan"),
 				// new Values("bob"), new Values("joey"), new Values(
 				// "nathan"));
-				// mockedSources.addMockData("1",
-				// CoregoodjobMockData.getMockData());
+				mockedSources.addMockData("1",
+						CoregoodjobMockData.getMockData());
 
 				// prepare the config
 				Config conf = new Config();
 				conf.setNumWorkers(2);
 
 				CompleteTopologyParam completeTopologyParam = new CompleteTopologyParam();
-				// completeTopologyParam.setMockedSources(mockedSources);
+				completeTopologyParam.setMockedSources(mockedSources);
 				completeTopologyParam.setStormConf(conf);
 				/**
 				 * TODO
@@ -92,7 +93,7 @@ public class CoregoodJobTest extends TestCase {
 				Map result = Testing.completeTopology(cluster, topology,
 						completeTopologyParam);
 
-				System.out.println(Testing.readTuples(result, "2"));
+				System.out.println(Testing.readTuples(result, "1"));
 				/**
 				 * // check whether the result is right
 				 * assertTrue(Testing.multiseteq(new Values(new

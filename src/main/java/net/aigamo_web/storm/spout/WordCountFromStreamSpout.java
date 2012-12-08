@@ -1,11 +1,9 @@
 package net.aigamo_web.storm.spout;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonParser;
@@ -17,6 +15,7 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
+import backtype.storm.utils.Utils;
 
 public class WordCountFromStreamSpout extends BaseRichSpout {
 
@@ -26,15 +25,12 @@ public class WordCountFromStreamSpout extends BaseRichSpout {
 	boolean isDistributed;
 	SpoutOutputCollector collector;
 	BufferedReader reader;
-
-	public static final String baseUri = "http://localhost:9000/coregoodjob/strom/api/1.0";
+	URL url;
+	public static final String baseUri = "http://localhost:9000/coregoodjob/storm/api/v1.0/test.json";
 
 	public WordCountFromStreamSpout() {
 		try {
-
-			URL url = new URL(baseUri + "/test.json");
-			reader = new BufferedReader(new InputStreamReader(url.openStream(),
-					"UTF-8"));
+			url = new URL(baseUri);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -48,14 +44,16 @@ public class WordCountFromStreamSpout extends BaseRichSpout {
 
 	@Override
 	public void nextTuple() {
+		Utils.sleep(1000);
 		try {
 
-			String contents = IOUtils.toString(reader);
+			// String contents = IOUtils.toString(reader);
 
 			// JsonFactoryの生成
 			JsonFactory factory = new JsonFactory();
+
 			// JsonParserの取得
-			JsonParser parser = factory.createJsonParser(contents);
+			JsonParser parser = factory.createJsonParser(url);
 			// 各オブジェクトの処理
 			if (parser.getCurrentToken() == JsonToken.START_OBJECT) {
 				while (parser.nextToken() != JsonToken.END_OBJECT) {

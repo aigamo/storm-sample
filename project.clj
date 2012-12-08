@@ -12,6 +12,7 @@
                  [org.twitter4j/twitter4j-core "2.2.6-SNAPSHOT"]
                  [org.twitter4j/twitter4j-stream "2.2.6-SNAPSHOT"]
                  [org.clojure/clojure-contrib "1.2.0"]
+                 [org.codehaus.jackson/jackson-jaxrs "1.9.9"]
                  ]
 
   :dev-dependencies [[storm "0.8.1"]
