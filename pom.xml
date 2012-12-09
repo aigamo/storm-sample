@@ -34,7 +34,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>storm</groupId>
@@ -70,6 +69,12 @@
 			<artifactId>jackson-jaxrs</artifactId>
 			<version>1.9.9</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.9.1</version>
+		</dependency>
+
 
 	</dependencies>
 
@@ -95,9 +100,6 @@
 							<mainClass></mainClass>
 						</manifest>
 					</archive>
-					<descriptors>
-						<descriptor>src/main/resources/assembly.xml</descriptor>
-					</descriptors>
 				</configuration>
 				<executions>
 					<execution>

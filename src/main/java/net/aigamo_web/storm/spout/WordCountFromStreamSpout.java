@@ -54,6 +54,9 @@ public class WordCountFromStreamSpout extends BaseRichSpout {
 
 			// JsonParserの取得
 			JsonParser parser = factory.createJsonParser(url);
+			parser.nextValue();
+
+			
 			// 各オブジェクトの処理
 			if (parser.getCurrentToken() == JsonToken.START_OBJECT) {
 				while (parser.nextToken() != JsonToken.END_OBJECT) {
@@ -62,12 +65,9 @@ public class WordCountFromStreamSpout extends BaseRichSpout {
 					// "name"フィールド
 					if ("samplewords".equals(name)) {
 						log.info(name);
-
 						while (parser.nextToken() != JsonToken.END_ARRAY) {
 							if (parser.getCurrentToken() == JsonToken.VALUE_STRING) {
-								System.out.println(parser.getText());
 								collector.emit(new Values(parser.getText()));
-
 							}
 						}
 					}

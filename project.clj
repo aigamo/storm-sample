@@ -1,6 +1,6 @@
 (defproject storm-sample "0.0.1-SNAPSHOT"
   :source-path "src/clj"
-  :java-source-path "src"
+  :java-source-path "src/main/java"
   :javac-options {:debug "true" :fork "true"}
   :resources-path "multilang"
   :aot :all
@@ -17,5 +17,6 @@
 
   :dev-dependencies [[storm "0.8.1"]
                      [org.clojure/clojure "1.4.0"]
+                     [org.codehaus.jackson/jackson-jaxrs "1.9.9"]
                      ])
 

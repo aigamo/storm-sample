@@ -23,6 +23,7 @@ public class CoregoodjobMockData {
 			JsonFactory factory = new JsonFactory();
 			// JsonParserの取得
 			JsonParser parser = factory.createJsonParser(url);
+			parser.nextValue();
 			// 各オブジェクトの処理
 			if (parser.getCurrentToken() == JsonToken.START_OBJECT) {
 				while (parser.nextToken() != JsonToken.END_OBJECT) {
@@ -32,7 +33,7 @@ public class CoregoodjobMockData {
 					if ("samplewords".equals(name)) {
 						while (parser.nextToken() != JsonToken.END_ARRAY) {
 							if (parser.getCurrentToken() == JsonToken.VALUE_STRING) {
-								System.out.println(parser.getText());
+								//System.out.println(parser.getText());
 								mockData.add(new Values(parser.getText()));
 							}
 						}
@@ -49,6 +50,16 @@ public class CoregoodjobMockData {
 				.size()]);
 
 		return result;
+	}
+
+	public static void main(String args[]) {
+		System.out.println("test");
+		Values[] values = CoregoodjobMockData.getMockData();
+		System.out.println(values.length);
+		for (Values val : values) {
+			System.out.println(val);
+
+		}
 	}
 
 }

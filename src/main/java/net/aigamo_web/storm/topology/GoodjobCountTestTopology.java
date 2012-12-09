@@ -12,7 +12,7 @@ import backtype.storm.testing.TestWordCounter;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.tuple.Fields;
 
-public class CoreCountTopology {
+public class GoodjobCountTestTopology {
 
 	public static void main(String args[]) throws Exception {
 		TopologyBuilder builder = new TopologyBuilder();
@@ -38,7 +38,7 @@ public class CoreCountTopology {
 			LocalCluster cluster = new LocalCluster();
 			cluster.submitTopology("word-count", conf, topology);
 
-			Thread.sleep(10000);
+			Thread.sleep(30000);
 
 			cluster.shutdown();
 		}
