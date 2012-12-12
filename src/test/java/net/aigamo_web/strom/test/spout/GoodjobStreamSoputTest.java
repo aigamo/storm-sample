@@ -1,13 +1,12 @@
 package net.aigamo_web.strom.test.spout;
 
-import java.io.File;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.aigamo_web.storm.model.AnalyticObject;
 
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
@@ -28,14 +27,23 @@ public class GoodjobStreamSoputTest {
 			// for (int i = 0; i < jsonNode.size(); i++) {
 			// mockData.add(new Values(jsonNode.get(i)));
 			// }\
-			SimpleDateFormat dateFormat = new SimpleDateFormat(
-					"yyyy MMM dd HH:mm:ss");
-			objectMapper.setDateFormat(dateFormat);
-			List<AnalyticObject> jsonNode2 = objectMapper.readValue(new File(
+			//SimpleDateFormat dateFormat = new SimpleDateFormat(
+			//		"yyyy MMM dd HH:mm:ss");
+			//objectMapper.setDateFormat(dateFormat);
+/*			List<AnalyticObject> jsonNode2 = objectMapper.readValue(new File(
 					"src/test/resources/mockStreamData.json"),
-					new TypeReference<AnalyticObject>() {
+					new TypeReference<List<AnalyticObject>>() {
 					});
-			System.out.println(jsonNode2.get(0));
+			System.out.println(jsonNode2.get(0).getBlogEntryNo());*/
+			JsonNode jsonNode = objectMapper.readTree(url);
+
+			for (int i = 0; i < jsonNode.size(); i++) {
+				AnalyticObject object = objectMapper.readValue(
+						jsonNode.get(i),
+						new TypeReference<AnalyticObject>() {
+						});
+				System.out.println(object);
+			}
 			// for (int i = 0; i < jsonNode2.size(); i++) {
 			// AnalyticObject jsonNode3 = objectMapper.readValue(jsonNode2,
 			// AnalyticObject.class);

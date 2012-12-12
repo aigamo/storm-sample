@@ -1,13 +1,19 @@
 package net.aigamo_web.storm.spout;
 
+import static backtype.storm.utils.Utils.tuple;
+
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
+
+import net.aigamo_web.storm.model.AnalyticObject;
 
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
@@ -35,7 +41,7 @@ public class GoodjobStreamSpout extends BaseRichSpout {
 	@Override
 	public void open(Map conf, TopologyContext context,
 			SpoutOutputCollector collector) {
-		// TODO Auto-generated method stub
+		this.collector = collector;
 
 	}
 
@@ -48,7 +54,10 @@ public class GoodjobStreamSpout extends BaseRichSpout {
 			ObjectMapper objectMapper = new ObjectMapper();
 			JsonNode jsonNode = objectMapper.readTree(url);
 			for (int i = 0; i < jsonNode.size(); i++) {
-				collector.emit("goodjobStream", new Values(jsonNode));
+				AnalyticObject object = objectMapper.readValue(jsonNode.get(i),
+						new TypeReference<AnalyticObject>() {
+						});
+				collector.emit(new Values(object));
 			}
 
 		} catch (Exception e) {

@@ -1,0 +1,6 @@
+
+パッケージ
+mvn clean package -Dmaven.test.skip
+
+
+storm jar target/storm-sample-0.0.1-SNAPSHOT-jar-with-dependencies.jar net.aigamo_web.storm.topology.GoodjobTopology

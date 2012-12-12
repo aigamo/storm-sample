@@ -3,13 +3,8 @@ package net.aigamo_web.storm.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
 public class AnalyticObject implements Serializable {
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private String operation;
@@ -20,12 +15,7 @@ public class AnalyticObject implements Serializable {
 
 	private String blogEntryNo;
 
-	public AnalyticObject(String opeartion, String name, Date date,
-			String blogEntryNo) {
-		this.operation = opeartion;
-		this.name = name;
-		this.date = date;
-		this.blogEntryNo = blogEntryNo;
+	public AnalyticObject() {
 	}
 
 	public String getOperation() {
