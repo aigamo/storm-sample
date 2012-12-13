@@ -21,7 +21,7 @@ public class GoodjobTopology {
 				new Fields("goodjobStream"));
 
 		builder.setBolt("3", new OperationBolt(), 4).fieldsGrouping("2",
-				new Fields("blogEntryNo", "AnalyticObject"));
+				new Fields("blogEntryNo"));
 
 		builder.setBolt("4", new PrinterBolt(), 1).globalGrouping("3");
 
@@ -40,10 +40,9 @@ public class GoodjobTopology {
 			LocalCluster cluster = new LocalCluster();
 			cluster.submitTopology("word-count", conf, topology);
 
-			Thread.sleep(60000);
+			Thread.sleep(1800000);
 
 			cluster.shutdown();
 		}
 	}
-
 }
